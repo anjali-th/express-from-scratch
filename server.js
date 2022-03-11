@@ -1,15 +1,16 @@
+require('dotenv').config();
 const express = require ('express');
 const {Pool} = require ('pg');
 
 const pool = new Pool({
-    database: 'animals',
+    connectionString: process.env.DATABASE_URL,
 });
 
 const app = express();
 
 app.use( express.static('public'));
 
-const PORT = 8000 | process.env.PORT;
+const PORT = process.env.PORT;
 
 app.get('/api/animals', (req, res)=>{
     pool.query('SELECT * FROM farm', (err, result)=>{
